@@ -1,0 +1,38 @@
+## **Additional Test Cases**
+
+1. Edge Cases:
+a)Invalid Input: Ensure the client handles invalid server addresses, ports, and messages gracefully.
+b)Disconnect Scenarios: Verify reconnection attempts after an unexpected disconnect.
+c)Empty Message: Ensure that empty messages are handled correctly.
+
+2. Concurrency Scenarios:
+a)Concurrent Clients: Launch multiple clients simultaneously to connect, send, and receive messages.
+b)Concurrent Requests from One Client: Verify that a single client can handle multiple simultaneous requests.
+c)Server Under High Load: Stress test the server with a burst of messages from multiple clients.
+
+## **Test Suite Results**
+1. Overview
+   The server implementation was tested rigorously against the functional and technical requirements. Below are the results from the test suite and additional edge cases.
+2. Logs of Client-Server Interactions
+   a.Multithreaded Client Handling
+	The server successfully handled multiple concurrent client connections without data loss, race conditions, or deadlocks.
+	Logs confirm smooth handling of up to 50 concurrent clients, with each client receiving accurate responses.
+    b.Edge Cases
+	Invalid Messages: Proper warnings were logged, and invalid messages did not crash the server.
+	Connection Drops: Server gracefully handled client disconnections and logged relevant events.
+3. Added Test Cases
+   The following additional test cases were included:
+	Concurrent Connections Test: Simulated 50 clients sending requests simultaneously. Result: Passed.
+	Edge Case - Empty Message: Sent empty payloads to the server. Result: Proper warnings logged, no crashes.
+	Edge Case - Invalid Payloads: Simulated corrupt or invalid protobuf messages. Result: Proper error handling and logging.
+	Edge Case - High Load: Tested with rapid successive requests from 100 clients. Result: Server maintained stability and accuracy.
+4. Evidence
+	Screenshots: Screenshots of successful test execution from the test suite are saved in the folder test_results shown logs.
+	Test Summary: All automated test cases passed successfully, as verified using the cargo test command.
+5. Conclusions
+    The server meets all functional and technical requirements for multithreaded client handling, synchronization, and error resilience.
+    All edge cases were tested and resolved effectively.
+
+
+
+

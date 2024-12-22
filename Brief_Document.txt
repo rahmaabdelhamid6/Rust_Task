@@ -1,0 +1,42 @@
+# **Brief Document**
+## **Identified Bugs in the Initial Implementation**
+
+1.Lack of Multithreading:
+-The server was handling one client at a time, causing delays and failing to support concurrent client connections effectively.
+2.Missing Synchronization:
+-No mechanisms were in place to ensure thread safety when accessing shared resources, risking data inconsistency and potential race conditions.
+3.Insufficient Error Handling:
+-Errors during message encoding, decoding, or network operations were not logged or handled comprehensively, leading to reduced reliability and maintainability.
+4.Blocking Behavior:
+-Blocking operations in the server's client-handling loop caused inefficiencies and increased latency.
+5.Limited Logging:
+Logs lacked clarity and coverage, making it difficult to diagnose issues or track server activities.
+
+## **Addressing Architectural Flaws**
+
+1. Introduction of Multithreading:
+-Used Rust’s std::thread to spawn a new thread for each client connection, enabling concurrent handling of multiple clients.
+2. Thread Safety with Synchronization Mechanisms:
+-Implemented Arc<AtomicBool> to safely share and modify the server’s running state across threads.
+-Ensured thread-safe operations when managing shared resources, reducing the risk of data corruption.
+3. Enhanced Error Handling:
+-Added comprehensive error checks for all I/O and network operations.
+-Used log crate to log detailed error messages, warnings, and information about system state and operations.
+4. Non-blocking and Efficient Design:
+-Set the server socket to non-blocking mode to prevent the main thread from stalling.
+-Reduced CPU usage with efficient sleep intervals (thread::sleep) in non-critical loops.
+5. Improved Logging:
+-Extended logging coverage to include client connection and disconnection events, error details, and server lifecycle status.
+-Used structured logging to improve the readability and utility of logs for debugging and monitoring.
+6. Documentation Improvements
+- Added inline comments throughout the codebase to explain significant changes and provide context for complex logic.
+- Prepared comprehensive reports on identified bugs, architectural flaws, and their fixes.
+
+## **Summary of Improvements**
+
+-The updated implementation adheres to the specified functional and technical requirements.
+-The server now supports concurrent client connections, ensuring scalability.
+-Synchronization mechanisms prevent race conditions and maintain data consistency.
+-Comprehensive error handling and detailed logging enhance reliability and maintainability.
+-Optimized design reduces unnecessary delays and improves performance under high loads.
+
